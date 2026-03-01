@@ -1,0 +1,44 @@
+The Netlify deploy errored, with the following guidance provided:
+
+Isolation
+- Relevant error: [line 5](#L5) — "git ref refs/heads/main does not exist or you do not have permission".
+- The build fails when preparing the repository: [lines 4–6](#L4-L6).
+
+Diagnosis
+- Error type: Git branch or permissions error.
+- Cause: Netlify attempted to check out refs/heads/main but that branch is not available to Netlify (either the repository’s default/target branch is named differently, e.g. master, or Netlify lacks permission to access the repo or that branch).
+
+Solution
+1. Verify the branch exists in the repo
+   - Go to your GitHub repo and confirm which branch you want to deploy (e.g. main or master).
+   - If your repo uses a different branch name (for example master), either:
+     - Change Netlify to deploy that branch (see step 2), or
+     - Create a main branch and push it:
+       ```bash
+       git checkout -b main
+       git push -u origin main
+       ```
+
+2. Point Netlify to the correct branch
+   - In the Netlify dashboard for your site: Site settings → Build & deploy → Continuous Deployment → Branch to deploy (or Deploy settings → Branch to deploy). Set it to the branch name that exists in your repo (e.g. master).
+   - Or re-link the repository and pick the correct branch when configuring the site.
+
+3. If the branch exists but Netlify still reports the error, re-authorize Netlify’s access (permissions)
+   - In Netlify: Site settings → Build & deploy → Repository → Edit settings → Re-link repository (or unlink and link again).
+   - On GitHub: check Applications → Authorized OAuth Apps → Netlify and ensure Netlify is permitted to access the repository/organization (especially for private repos or org repos). Grant access or reauthorize if needed.
+
+4. After making the change, trigger a new deploy from Netlify.
+
+Notes
+- This diagnostics refers to the build-prep error at [line 5](#L5).
+
+The relevant error logs are:
+
+Line 0: build-image version: d51fd32053fcc0da4148dc46bb6db7c33c7d9b1f (noble-new-builds)
+Line 1: buildbot version: 09de83776575b998a6482cc1cc9e332db896a036
+Line 2: Fetching cached dependencies
+Line 3: Failed to fetch cache, continuing with build
+Line 4: Starting to prepare the repo for build
+Line 5: git ref refs/heads/main does not exist or you do not have permission
+Line 6: Failing build: Failed to prepare repo
+Line 7: Finished processing build request in 721ms

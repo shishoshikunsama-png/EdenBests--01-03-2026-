@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Success - Eden Bets</title>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1626916708298868');
+  fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1626916708298868&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+    .background img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.4;
+    }
+    .background::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+    }
+    .card {
+      position: relative;
+      z-index: 10;
+      max-width: 400px;
+      width: 90%;
+      padding: 3rem 2rem;
+      border-radius: 1rem;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(10px);
+      text-align: center;
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      background: rgba(34,197,94,0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+    .icon svg {
+      width: 32px;
+      height: 32px;
+      color: #22c55e;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    p {
+      color: #9ca3af;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+    #counter {
+      color: #FFD700;
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 0.875rem 1.5rem;
+      background: #229ED9;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-bottom: 1rem;
+    }
+    .btn:hover { background: #1a8bc7; }
+    .back-link {
+      color: #6b7280;
+      font-size: 0.875rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: #fff; }
+  </style>
+</head>
+<body>
+
+<!-- Lead event fires FIRST before any redirect -->
+<script>
+  fbq('track', 'Lead');
+</script>
+
+<div class="background">
+  <img src="/stadium.jpg" alt="Stadium">
+</div>
+
+<div class="card">
+  <div class="icon">
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+    </svg>
+  </div>
+  <h1>Success!</h1>
+  <p>Redirecting to Telegram Free Group in <span id="counter">5</span> seconds...</p>
+  <a href="https://t.me/+DD1IP31Oams5MDRk" class="btn">Join Telegram Now</a>
+  <a href="/" class="back-link">Return to Home</a>
+</div>
+
+<script>
+let count = 5;
+const telegramLink = "https://t.me/+DD1IP31Oams5MDRk";
+const interval = setInterval(() => {
+  count--;
+  document.getElementById('counter').textContent = count;
+  if (count <= 0) {
+    clearInterval(interval);
+    window.location.href = telegramLink;
+  }
+}, 1000);
+</script>
+
+</body>
+</html>

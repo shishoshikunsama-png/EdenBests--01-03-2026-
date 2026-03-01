@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Dark Theme Palette */
+  --background: 240 10% 4%;      /* #0a0a0b - Deep dark background */
+  --foreground: 0 0% 98%;        /* White text */
+  
+  --primary: 48 100% 50%;        /* #FFD700 - Gold */
+  --primary-foreground: 240 10% 4%; /* Black text on gold */
+
+  --telegram: 199 73% 49%;       /* #229ED9 - Telegram Blue */
+  --telegram-foreground: 0 0% 100%;
+  
+  --secondary: 48 100% 50%;      /* Changed to Gold as per request */
+  --secondary-foreground: 0 0% 98%;
+  
+  --muted: 240 4% 16%;
+  --muted-foreground: 240 5% 65%;
+  
+  --accent: 48 100% 50%;
+  --accent-foreground: 240 10% 4%;
+  
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 98%;
+  
+  --border: 240 4% 16%;
+  --input: 240 4% 16%;
+  --ring: 48 100% 50%;
+  
+  --radius: 0.75rem;
+}
+
+@layer base {
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-primary/30 selection:text-white;
+    font-family: 'Inter', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight;
+    font-family: 'Playfair Display', serif; /* Optional serif for premium feel headers */
+  }
+}
+
+@layer utilities {
+  .text-gold {
+    color: hsl(var(--primary));
+  }
+  
+  .bg-gold {
+    background-color: hsl(var(--primary));
+  }
+  
+  .border-gold {
+    border-color: hsl(var(--primary));
+  }
+
+  /* Custom Shake Animation */
+  @keyframes shake-gentle {
+    0%, 100% { transform: rotate(0deg); }
+    2% { transform: rotate(-2deg); }
+    4% { transform: rotate(2deg); }
+    6% { transform: rotate(-2deg); }
+    8% { transform: rotate(2deg); }
+    10% { transform: rotate(0deg); }
+  }
+
+  .animate-shake-periodic {
+    animation: shake-gentle 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+  
+  .glass-card {
+    @apply bg-white/5 backdrop-blur-md border border-white/10;
+  }
+}

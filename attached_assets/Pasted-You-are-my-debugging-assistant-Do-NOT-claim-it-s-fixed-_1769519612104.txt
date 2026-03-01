@@ -1,0 +1,59 @@
+You are my debugging assistant. Do NOT claim it’s fixed unless you can prove it by running a Netlify build + deploy preview and opening the deployed URL to confirm the stadium background image visibly renders (not just “no errors”). If you cannot access Netlify directly, you must instruct me to do a precise check and you must only conclude success after I report the deployed URL shows the background.
+
+Context:
+- In Replit (dev) the stadium background image shows.
+- After pushing to GitHub and deploying via Netlify, the background does NOT show.
+- The page shows broken image text like “stadium background” (alt text) which suggests the image request is failing on Netlify (likely path/case/build/asset handling).
+
+Your task:
+1) Identify the project type (plain HTML/CSS, React/Vite, Next, CRA, etc.) by inspecting package.json + folder structure. Then apply the correct asset strategy for that stack.
+2) Find where the stadium background is referenced (CSS background-image, <img>, inline style, component, etc.).
+3) Diagnose using the deployed network requests:
+   - In deployed site, open DevTools → Network → filter Img → reload → click failed request.
+   - Record the failed URL (exact path), status code (404/403), and response headers.
+   - Compare to local dev URL.
+4) Fix it using the MOST reliable method for the detected stack. You must try methods in this order and stop at the first that is PROVEN working on Netlify deploy:
+
+Method A (Most reliable): “public/” static asset
+- Move the stadium image into the correct static/public directory for the stack:
+  - Vite/React: /public/stadium.jpg (or .png)
+  - Next.js: /public/stadium.jpg
+  - Plain HTML: keep under /assets or /images but ensure correct relative paths
+- Update references:
+  - CSS: background-image: url("/stadium.jpg"); (leading slash from site root)
+  - HTML: <img src="/stadium.jpg" alt="stadium background">
+- Ensure Git includes the file (not ignored) and the filename casing matches exactly.
+
+Method B: Bundler import (only if using Vite/React/Next and image is in src/)
+- Place image under src/assets/stadium.jpg
+- In component: import stadium from "./assets/stadium.jpg"; then style={{ backgroundImage: url(${stadium}) }}
+- For CSS modules: use url("../assets/stadium.jpg") with correct relative path.
+- Verify build output includes the asset.
+
+Method C: Fix case-sensitivity (common Netlify/Linux issue)
+- Check exact filename case in repo vs reference in code (Stadium.jpg vs stadium.jpg).
+- On Git, case-only renames can be tricky. Do:
+  - git mv stadium.jpg stadium-temp.jpg
+  - git mv stadium-temp.jpg stadium.jpg (correct final case)
+  - commit and push.
+
+Method D: Fix broken relative paths
+- If CSS is in /styles/style.css and image in /assets/stadium.jpg then CSS should use url("../assets/stadium.jpg").
+- If using a router with nested routes, relative URLs can break; prefer absolute root URLs like /stadium.jpg via public.
+
+Method E: Netlify config / build settings
+- Confirm build command + publish directory are correct:
+  - Vite: build command npm run build, publish dist
+  - CRA: publish build
+  - Next: use Netlify Next plugin or correct adapter; verify static assets are included.
+- Ensure the image exists in the publish directory after build. Print a directory tree of the publish folder and confirm stadium file is there.
+
+Hard requirements:
+- You must produce a single final fix (the minimal change set) only after it is verified on an actual Netlify deploy preview.
+- You must provide exact file moves, code diffs, and the exact final URL path the page requests for the background image.
+- You must include a “verification checklist” and I will confirm results. Do not say “done” until I confirm the deployed preview shows the stadium background.
+
+Start now:
+- Inspect my repo structure and locate the background reference.
+- Determine stack and apply Method A first unless clearly impossible.
+- Then trigger a Netlify build (or instruct me step-by-step to do it) and validate with DevTools network results.

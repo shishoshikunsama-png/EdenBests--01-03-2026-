@@ -1,0 +1,129 @@
+You must reinstall the pixel using the ONLY method that works correctly for PageView + Lead.
+Follow these steps EXACTLY and do NOT change anything else.
+Do not invent new logic. Do not move code. Do not restructure pages.
+Just implement the pixel correctly.”
+
+⸻
+
+1️⃣ PAGEVIEW — MUST GO IN <head> ON EVERY PAGE
+
+Open the file that loads the <head> (usually index.html and success.html).
+
+Insert this the SAME way every time, right before </head>:
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'PIXEL_ID_HERE');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=PIXEL_ID_HERE&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+RULES THAT MUST BE FOLLOWED:
+ • This MUST be inside <head> — not body
+ • This MUST NOT appear twice on the same page
+ • The <noscript> MUST go inside <body> if Vite throws an error
+ • The ID MUST match exactly
+ • No edits, no rearranging
+
+If PageView shows “Invalid,” it means:
+✔ You placed it in the wrong area OR
+✔ Pixel appears twice OR
+✔ You accidentally added Lead inside the head
+
+Fix it.
+
+⸻
+
+2️⃣ LEAD — MUST FIRE ON THE SUCCESS PAGE ONLY
+
+Lead is NOT fired when clicking the “Join Telegram” button.
+
+Lead MUST fire only when the user reaches the countdown page (success.html or join.html).
+
+Inside that page, immediately after <body>, insert EXACTLY this:
+
+<script>
+  fbq('track', 'Lead');
+</script>
+
+RULES THAT MUST BE FOLLOWED:
+ • Lead script MUST be inside <body>
+ • Lead script MUST appear BEFORE any countdown or redirect script
+ • Lead MUST NOT be wrapped in comments
+ • Lead MUST NOT be placed inside <head>
+ • Lead MUST NOT appear on the homepage
+
+If you put Lead on the wrong page → Meta can’t verify it → Lead never turns green.
+
+⸻
+
+3️⃣ BUTTON LOGIC — DO NOT FIRE LEAD ON CLICK
+
+The join button MUST NOT fire Lead.
+
+The join button must redirect to the LIVE success page:
+
+<a href="/success.html">Join VIP Group</a>
+
+Then the success.html page fires Lead automatically.
+
+This is why Meta turns Lead green — because Meta SEES a dedicated lead page.
+
+⸻
+
+4️⃣ REDIRECT PAGE — MUST HAVE COUNTDOWN BEFORE TELEGRAM
+
+Inside success.html:
+
+<p id="counter">5</p>
+
+<script>
+let i = 5;
+let link = 'THE SAME TELEGRAM LINK ALREADY USED ON THE SITE';
+
+const timer = setInterval(() => {
+  i--;
+  document.getElementById('counter').textContent = i;
+  if (i <= 0) {
+    clearInterval(timer);
+    window.location.href = link;
+  }
+}, 1000);
+</script>
+
+DO NOT CHANGE THE TELEGRAM LINK
+
+Use the same link that was already in the repo.
+Do not replace it with anything else.
+
+⸻
+
+5️⃣ AFTER IMPLEMENTATION — CHECKLIST (DO NOT SKIP)
+
+Before deploying, confirm:
+
+✔ Pixel ID appears only once per page
+✔ PageView fires on all pages
+✔ Lead fires ONLY on the success page
+✔ Lead script is right after <body>
+✔ PageView script is inside <head>
+✔ Join button goes to /success.html
+✔ Countdown page works
+✔ Redirect goes to Telegram
+✔ No duplicated pixel IDs
+✔ No console errors
+
+ONLY when all items are correct, deploy.

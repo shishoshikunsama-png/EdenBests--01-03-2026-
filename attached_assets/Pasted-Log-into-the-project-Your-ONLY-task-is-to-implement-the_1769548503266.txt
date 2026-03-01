@@ -1,0 +1,104 @@
+Log into the project.
+Your ONLY task is to implement the Meta Pixel correctly for PageView + Lead using the exact working pattern.
+
+Pixel ID: 1626916708298868
+
+STEP 1 — ADD BASE PIXEL (PageView)
+
+In every page, place this code inside the <head> tag, right before </head>:
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1626916708298868');
+fbq('track', 'PageView');
+</script>
+
+<noscript>
+  <img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1626916708298868&ev=PageView&noscript=1"/>
+</noscript>
+<!-- End Meta Pixel Code -->
+✔ This MUST be inside <head>
+✔ Do NOT insert it after <body>
+✔ Do NOT wrap in any condition
+✔ Do NOT include it twice
+
+This is the only place Meta guarantees PageView fires.  
+
+⸻
+
+STEP 2 — CREATE OR FIX THE SUCCESS/CONVERSION PAGE
+
+Create a standalone HTML file (e.g., success.html or keep your existing one) that:
+ 1. Loads immediately
+ 2. Fires Lead BEFORE any redirect
+ 3. Then redirects after countdown
+
+Your success page HTML MUST look like this:
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Success</title>
+</head>
+<body>
+
+<script>
+  fbq('track', 'Lead');
+</script>
+
+<div id="counter">5</div>
+
+<script>
+let count = 5;
+const link = window.location.href; // use the existing Telegram link if needed
+const interval = setInterval(() => {
+  count--;
+  document.getElementById('counter').textContent = count;
+  if (count <= 0) {
+    clearInterval(interval);
+    window.location.href = link;
+  }
+}, 1000);
+</script>
+
+</body>
+</html>
+✔ Lead script MUST be at the top of <body>
+✔ PageView code stays in head
+✔ Success page must be a full page load, not a JavaScript transition
+
+This method ensures Meta Pixel Helper and Events Manager see the Lead event BEFORE the redirect.
+
+⸻
+
+STEP 3 — UPDATE JOIN BUTTON
+
+Replace your “Join” button link so it goes to your success page:
+
+<a href="/success.html">Join free VIP</a>
+Do NOT fire Lead on click — Meta counts conversions by loading success page.  
+
+⸻
+
+STEP 4 — TESTING (DO NOT SKIP)
+
+After implementing:
+ 1. Go to Meta Events Manager → Test Events
+ 2. Visit your homepage → PageView should fire
+ 3. Click Join → success page opens → Lead should fire
+ 4. Meta Pixel Helper should show 2 events: PageView + Lead
+
+If either doesn’t fire:
+ • Check placement
+ • Confirm head vs body
+ • Confirm success page is full standalone HTML
