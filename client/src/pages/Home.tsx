@@ -3,7 +3,7 @@ import { Send, TrendingUp, ShieldCheck, Trophy } from "lucide-react";
 import { Button } from "@/components/Button";
 
 export default function Home() {
-  const TELEGRAM_LINK = "https://t.me/+DD1IP31Oams5MDRk";
+  const TELEGRAM_LINK = "https://t.me/+QidebStIHb1hOGM0";
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col relative">

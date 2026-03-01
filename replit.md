@@ -64,7 +64,7 @@ Meta Pixel requires full page loads to properly track events. SPA navigation doe
 ## External Dependencies
 
 ### Third-Party Services
-- **Telegram**: External link to `https://t.me/+DD1IP31Oams5MDRk` for user engagement
+- **Telegram**: External link to `https://t.me/+QidebStIHb1hOGM0` for user engagement
 - **Google Fonts**: Inter and Playfair Display font families loaded via CDN
 - **Meta Pixel**: Facebook/Meta tracking pixel for PageView and Lead events
 
